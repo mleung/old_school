@@ -67,6 +67,7 @@ int main(int argc, char** argv) {
      
      if (!valid_string(table)) {
          printf("You must supply a table name");
+         return NULL;
      }
      
      // TODO: Check connection before using.
