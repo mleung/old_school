@@ -15,28 +15,28 @@
 #include <string.h>
 #include "old_school.h"
 #include "utilities.c"
-
+// Being used to test the app.
 int main(int argc, char** argv) {
     MYSQL *conn;
     MYSQL_RES *res;
     MYSQL_ROW row;
     
     // TODO: Extract this out to a config file and read it. 
-    if (conn = do_connect("localhost", "root", NULL, "beermenus_development")) {
-        if (res = find("bars", "id, name", "id = 1", conn, NULL, NULL)) {
+    if (conn = do_connect("localhost", "root", NULL, "urbis_development")) {
+        if (res = find("items", "id, title", "id = 1", conn, NULL, NULL)) {
             while ((row = mysql_fetch_row(res)) != NULL) {
             	printf("%s \n", row[1]);
             }
         }   
         mysql_free_result(res);
         
-        long rowsAffected = insert("bars", "id, name", "99999, 'poop'", conn);
+        long rowsAffected = insert("items", "id, title", "99999, 'poop'", conn);
         printf("%d rows affected by insert\n", rowsAffected);
         
-        rowsAffected = update("bars", "name = 'poopy!'", "name = 'poop'", conn);
+        rowsAffected = update("items", "title = 'poopy!'", "title = 'poop'", conn);
         printf("%d rows affected by update\n", rowsAffected);
 
-        rowsAffected = delete("bars", "name = 'poopy!'", conn);
+        rowsAffected = delete("items", "title = 'poopy!'", conn);
         printf("%d rows affected by delete\n", rowsAffected);
         
         mysql_close(conn);
