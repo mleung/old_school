@@ -87,6 +87,7 @@ int main(int argc, char** argv) {
      strcat(query, " FROM ");
      strcat(query, table);
      if (valid_string(joins)) {
+         // Concat a space so the user can just type like "INNER JOIN blah ON blah.id = blahblah.id"
          strcat(query, " ");
          strcat(query, joins);
      }
