@@ -64,8 +64,7 @@ int main(int argc, char** argv) {
  
  // Think about passing in a struct here soon. The param list is getting a bit out of control. 
  MYSQL_RES* find(char *table, char *fields, char *conditions, MYSQL *conn, char *limit, char *joins) {
-     // TODO: Add in joins.
-     
+
      if (!valid_string(table)) {
          printf("You must supply a table name");
          return NULL;
@@ -142,7 +141,6 @@ long insert(char *table, char *fields, char *values, MYSQL *conn) {
 }
 
 long update(char *table, char *statement, char *conditions, MYSQL *conn) {
-    // TODO: Separate these into two checks, and printf the appropriate message.
     if (!valid_string(table)) {
         printf("You must supply a table to update.");
         return 0;
