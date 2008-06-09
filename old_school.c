@@ -109,7 +109,20 @@ int main(int argc, char** argv) {
  }
  
 long insert(char *table, char *fields, char *values, MYSQL *conn) {
-    if (!valid_string(table) || !valid_string(fields) || !valid_string(values)) {
+    /* TODO: Extract this to a separate function, as it's used elsewhere. 
+    *  In fact, maybe we should have a generic function for checking a value
+    *  and printing a message.
+    */
+    if (!valid_string(table)) {
+        printf("You must supply a table to insert into.");
+        return 0;
+    }
+    if (!valid_string(fields)) {
+        printf("You must supply a list of fields to insert.");
+        return 0;
+    }
+    if (!valid_string(values)) {
+        printf("You must supply a list of values to insert.");
         return 0;
     }
 
@@ -130,10 +143,15 @@ long insert(char *table, char *fields, char *values, MYSQL *conn) {
 
 long update(char *table, char *statement, char *conditions, MYSQL *conn) {
     // TODO: Separate these into two checks, and printf the appropriate message.
-    if (!valid_string(table) || !valid_string(statement)) {
+    if (!valid_string(table)) {
+        printf("You must supply a table to update.");
         return 0;
     }
-
+    if (!valid_string(statement)) {
+        printf("You must supply an update statment.");
+        return 0;
+    }
+    
     char query[MAX_QUERY_SIZE] = "";
    
     // This builds up the query string so the user doesn't have to.
@@ -152,7 +170,7 @@ long update(char *table, char *statement, char *conditions, MYSQL *conn) {
 
 long delete(char *table, char *conditions, MYSQL *conn) {
     if (!valid_string(table)) {
-        printf("You must supply a table name.");
+        printf("You must supply a table to delete from.");
         return 0;
     }
 
@@ -176,6 +194,7 @@ long run_query(MYSQL *conn, char *query) {
     	fprintf(stderr, "%s\n", mysql_error(conn));
     	return 0;
     }
+    
     return (long) mysql_affected_rows(conn);
 }
  
