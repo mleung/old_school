@@ -8,7 +8,7 @@
 MYSQL* do_connect(char *server, char *user, char *pwd, char *database);
 
 // Does a select query, and returns the results.
-MYSQL_RES* find(char *table, char *fields, char *conditions, MYSQL *conn, char *limit);
+MYSQL_RES* find(char *table, char *fields, char *conditions, MYSQL *conn, char *limit, char *joins);
 
 // Inserts a record into the database.
 long insert(char *table, char *fields, char *values, MYSQL *conn);

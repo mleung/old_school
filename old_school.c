@@ -23,7 +23,7 @@ int main(int argc, char** argv) {
     
     // TODO: Extract this out to a config file and read it. 
     if (conn = do_connect("localhost", "root", NULL, "beermenus_development")) {
-        if (res = find("bars", "id, name", "id = 1", conn, NULL)) {
+        if (res = find("bars", "id, name", "id = 1", conn, NULL, NULL)) {
             while ((row = mysql_fetch_row(res)) != NULL) {
             	printf("%s \n", row[1]);
             }
@@ -62,7 +62,8 @@ int main(int argc, char** argv) {
    
  }
  
- MYSQL_RES* find(char *table, char *fields, char *conditions, MYSQL *conn, char *limit) {
+ // Think about passing in a struct here soon. The param list is getting a bit out of control. 
+ MYSQL_RES* find(char *table, char *fields, char *conditions, MYSQL *conn, char *limit, char *joins) {
      // TODO: Add in joins.
      
      if (!valid_string(table)) {
@@ -85,6 +86,10 @@ int main(int argc, char** argv) {
      strcat(query, fieldList);
      strcat(query, " FROM ");
      strcat(query, table);
+     if (valid_string(joins)) {
+         strcat(query, " ");
+         strcat(query, joins);
+     }
      if (valid_string(conditions)) {
          strcat(query, " WHERE ");
          strcat(query, conditions);
