@@ -15,7 +15,8 @@
 #include <string.h>
 #include "old_school.h"
 #include "utilities.c"
-// Being used to test the app.
+
+// Being used to test the lib.
 int main(int argc, char** argv) {
     MYSQL *conn;
     MYSQL_RES *res;
@@ -30,13 +31,13 @@ int main(int argc, char** argv) {
         }   
         mysql_free_result(res);
         
-        long rowsAffected = insert("items", "id, title", "99999, 'poop'", conn);
+        long rowsAffected = insert("items", "id, title", "99999, 'test'", conn);
         printf("%d rows affected by insert\n", rowsAffected);
         
-        rowsAffected = update("items", "title = 'poopy!'", "title = 'poop'", conn);
+        rowsAffected = update("items", "title = 'testy!'", "title = 'test'", conn);
         printf("%d rows affected by update\n", rowsAffected);
 
-        rowsAffected = delete("items", "title = 'poopy!'", conn);
+        rowsAffected = delete("items", "title = 'testy!'", conn);
         printf("%d rows affected by delete\n", rowsAffected);
         
         mysql_close(conn);
@@ -49,7 +50,7 @@ int main(int argc, char** argv) {
 	conn = mysql_init(NULL);
 	
 	if (conn == NULL) {
-        printf("An error occurred while trying to connect to MYSQL. So sorry.");
+        printf("An error occurred while trying to connect to MySQL. So sorry.");
         return NULL;
 	}
 
@@ -195,5 +196,4 @@ long run_query(MYSQL *conn, char *query) {
     
     return (long) mysql_affected_rows(conn);
 }
- 
  
